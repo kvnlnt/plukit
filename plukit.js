@@ -12,9 +12,12 @@ var Plukit = {
             clean: {
                 mp3: 'gtr_elec_clean.mp3'
             },
-            distortion: {
+            dist: {
                 mp3: 'gtr_elec_dist'
             }
         }
-    }
+    },
+    bass:{}
+    banjo:{},
+    ukelele:{}
 };
