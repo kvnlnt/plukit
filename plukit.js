@@ -17,7 +17,7 @@ var Plukit = {
             }
         }
     },
-    bass:{}
+    bass:{},
     banjo:{},
     ukelele:{}
 };
