@@ -22,14 +22,15 @@ var PLUKIT = {
 var Plukit = function(options){
 
     // settings obj
-    var settings           = {};
-    settings.sampleFile    = options.sampleFile || PLUKIT.guitar.acoustic.steel.mp3;
-    settings.samplePath    = options.samplePath || 'modules/plukit/';
-    settings.sampleLength  = options.sampleLength || 2000;
-    settings.device        = 'browser' || options.device;
+    var defaults           = {};
+    defaults.sampleFile    = PLUKIT.guitar.acoustic.steel.mp3;
+    defaults.samplePath    = 'modules/plukit/';
+    defaults.sampleLength  = 2000;
+    defaults.device        = 'browser';
 
-    this.settings          = settings;
-    this.player            = this.getPlayer();
+    // setup options
+    this.settings = _.extend(this, defaults, options);
+    this.player   = this.getPlayer();
 
 };
 
