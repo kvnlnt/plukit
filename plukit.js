@@ -99,8 +99,23 @@ Plukit.prototype.play = function (note) {
             this.player.play(note);
             break;
         case 'Android':
-            // return this.playAndroid(note);
+            this.playAndroid(note);
             break;
+    }
+
+};
+
+Plukit.prototype.playAndroid = function (note){
+
+    mp3 = new Media(this.samplePath + this.sampleFile, onSuccess, onError);
+
+    mp3.play();
+
+    function onSuccess() { alert("playAudio():Audio Success"); }
+
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
     }
 
 };
