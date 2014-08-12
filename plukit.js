@@ -1,4 +1,4 @@
-var Plukit = {
+var PLUKIT = {
     guitar: {
         acoustic: {
             nylon: {
@@ -16,8 +16,91 @@ var Plukit = {
                 mp3: 'gtr_elec_dist'
             }
         }
-    },
-    bass:{},
-    banjo:{},
-    ukelele:{}
+    }
+};
+
+var Plukit = function(options){
+
+    // settings obj
+    var settings           = {};
+    settings.sampleFile    = options.sampleFile || PLUKIT.guitar.acoustic.steel.mp3;
+    settings.samplePath    = options.samplePath || 'modules/plukit/';
+    settings.sampleLength  = options.sampleLength || 2000;
+    settings.device        = 'browser' || options.device;
+
+    this.settings          = settings;
+    this.player            = this.getPlayer();
+
+};
+
+Plukit.prototype.getPlayer = function() {
+
+    switch(this.settings.device) {
+        case 'browser':
+            return this.getHowler();
+            break;
+        case 'Android':
+            return this.getAndroid();
+            break;
+    }
+
+};
+
+Plukit.prototype.getHowler = function(){
+
+    var howler = new Howl({
+      urls: [this.settings.samplePath + this.settings.sampleFile],
+      sprite: this.calcSpriteOffsets()
+    });
+
+    return howler;
+
+};
+
+Plukit.prototype.getAndroid = function(){
+
+    return 'got android';
+
+};
+
+Plukit.prototype.calcSpriteOffsets = function(){
+
+    var that          = this;
+    var keys          = ['c','c#/db','d','d#/eb','e','f','f#/gb','g','g#/ab','a','a#/bb','b'];
+    var offset        = 0;
+    var sprite        = {};
+    var octaves       = 5;
+    
+    _.times(octaves,function(n){
+
+        var octave = n+1;
+        _.each(keys, function(key){
+
+            var key_notes = key.split('/');
+            sprite[key_notes[0] + octave] = [offset, that.settings.sampleLength];
+            if(key_notes.length > 1){
+                sprite[key_notes[1] + octave] = [offset, that.settings.sampleLength];
+            } 
+            
+            offset += that.settings.sampleLength;
+
+        });
+
+    });
+
+    return sprite;
+
+};
+
+Plukit.prototype.play = function (note) {
+    
+    switch(this.settings.device) {
+        case 'browser':
+            this.player.play(note);
+            break;
+        case 'Android':
+            // return this.playAndroid(note);
+            break;
+    }
+
 };
