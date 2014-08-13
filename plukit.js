@@ -60,7 +60,16 @@ Plukit.prototype.getHowler = function(){
 
 Plukit.prototype.getAndroid = function(){
 
-    return 'got android';
+    var android = new Media(this.samplePath + this.sampleFile, onSuccess, onError);
+
+    function onSuccess() { alert("playAudio():Audio Success"); }
+
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+              'message: ' + error.message + '\n');
+    }
+
+    return android;
 
 };
 
@@ -100,7 +109,7 @@ Plukit.prototype.play = function (note) {
             this.player.play(note);
             break;
         case 'Android':
-            this.playAndroid(note);
+            this.player.play();
             break;
     }
 
