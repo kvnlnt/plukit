@@ -29,13 +29,15 @@ var Plukit = function(options){
     defaults.device        = 'browser';
 
     // setup options
-    this.settings = _.extend(this, defaults, options);
-    this.player   = this.getPlayer();
+    this.settings      = _.extend(this, defaults, options);
+    this.spriteOffsets = this.calcSpriteOffsets();
+    this.player        = this.getPlayer();
 
 };
 
 Plukit.prototype.getPlayer = function() {
 
+    // get player object
     switch(this.settings.device) {
         case 'browser':
             return this.getHowler();
@@ -51,7 +53,7 @@ Plukit.prototype.getHowler = function(){
 
     var howler = new Howl({
       urls: [this.settings.samplePath + this.settings.sampleFile],
-      sprite: this.calcSpriteOffsets()
+      sprite: this.settings.spriteOffsets
     });
 
     return howler;
@@ -60,7 +62,9 @@ Plukit.prototype.getHowler = function(){
 
 Plukit.prototype.getAndroid = function(){
 
-    return 'got android';
+    var android = new Media(this.samplePath + this.sampleFile, onSuccess, onError);
+
+    return android;
 
 };
 
@@ -100,23 +104,11 @@ Plukit.prototype.play = function (note) {
             this.player.play(note);
             break;
         case 'Android':
-            this.playAndroid(note);
+            var offset = this.spriteOffsets[note][0];
+            this.player.seekTo(offset);
+            this.player.play();
+            // this.playAndroid(note);
             break;
-    }
-
-};
-
-Plukit.prototype.playAndroid = function (note){
-
-    mp3 = new Media(this.samplePath + this.sampleFile, onSuccess, onError);
-
-    mp3.play();
-
-    function onSuccess() { alert("playAudio():Audio Success"); }
-
-    function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
     }
 
 };
