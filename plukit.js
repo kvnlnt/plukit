@@ -62,7 +62,10 @@ Plukit.prototype.getHowler = function(){
 
 Plukit.prototype.getAndroid = function(){
 
-    var android = new Media(this.samplePath + this.sampleFile, onSuccess, onError);
+    var onSuccess = function(){};
+    var onError   = function(){};
+    var file      = this.samplePath + this.sampleFile;
+    var android   = new Media(file, onSuccess, onError);
 
     return android;
 
@@ -100,14 +103,26 @@ Plukit.prototype.calcSpriteOffsets = function(){
 Plukit.prototype.play = function (note) {
     
     switch(this.settings.device) {
+
         case 'browser':
             this.player.play(note);
             break;
+
         case 'Android':
-            var offset = this.spriteOffsets[note][0];
-            this.player.seekTo(offset);
-            this.player.play();
+
+            var onSuccess = function(){};
+            var onError   = function(){};
+            var file      = this.samplePath + this.sampleFile;
+            var player    = new Media(file, onSuccess, onError);
+            var offset    = this.spriteOffsets[note][0];
+            var stop      = function(){ player.pause(); player.release(); };
+
+            player.seekTo(offset);
+            player.play();
+            
+            window.setTimeout(stop, 1000);
             break;
+
     }
 
 };
