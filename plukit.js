@@ -42,9 +42,6 @@ Plukit.prototype.getPlayer = function() {
         case 'browser':
             return this.getHowler();
             break;
-        case 'Android':
-            return this.getAndroid();
-            break;
     }
 
 };
@@ -57,17 +54,6 @@ Plukit.prototype.getHowler = function(){
     });
 
     return howler;
-
-};
-
-Plukit.prototype.getAndroid = function(){
-
-    var onSuccess = function(){};
-    var onError   = function(){};
-    var file      = this.settings.samplePath + this.settings.sampleFile;
-    var android   = new Media(file, onSuccess, onError);
-
-    return android;
 
 };
 
