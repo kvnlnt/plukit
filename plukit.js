@@ -13,7 +13,7 @@ var PLUKIT = {
                 mp3: 'gtr_elec_clean.mp3'
             },
             dist: {
-                mp3: 'gtr_elec_dist'
+                mp3: 'gtr_elec_dist.mp3'
             }
         }
     }
