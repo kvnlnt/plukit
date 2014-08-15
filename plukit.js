@@ -26,7 +26,7 @@ var Plukit = function(options){
     defaults.sampleFile    = PLUKIT.guitar.acoustic.steel.mp3;
     defaults.samplePath    = 'modules/plukit/';
     defaults.sampleLength  = 2000;
-    defaults.device        = 'browser';
+    defaults.device        = "undefined" === typeof device ? 'browser' : device.platform;
 
     // setup options
     this.settings      = _.extend(this, defaults, options);
