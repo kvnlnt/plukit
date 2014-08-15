@@ -64,7 +64,7 @@ Plukit.prototype.getAndroid = function(){
 
     var onSuccess = function(){};
     var onError   = function(){};
-    var file      = this.samplePath + this.sampleFile;
+    var file      = this.settings.samplePath + this.settings.sampleFile;
     var android   = new Media(file, onSuccess, onError);
 
     return android;
@@ -112,7 +112,7 @@ Plukit.prototype.play = function (note) {
 
             var onSuccess = function(){};
             var onError   = function(){};
-            var file      = this.samplePath + this.sampleFile;
+            var file      = this.settings.samplePath + this.settings.sampleFile;
             var player    = new Media(file, onSuccess, onError);
             var offset    = this.spriteOffsets[note][0];
             var stop      = function(){ player.pause(); player.release(); };
